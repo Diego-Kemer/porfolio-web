@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api")
 //@CrossOrigin(origins = "https://diego-kemer-cd785.web.app")
 @CrossOrigin(origins = "*")
 public class Controller {
@@ -45,100 +44,89 @@ public class Controller {
     private IUsuario userI;
     
     //Rutas para los estudios
-    @GetMapping("/estudios")
+    @GetMapping("/auth/estudios")
     public List<Estudios> verEstudios(){
         return estI.verEstudios();
     }
-    @PreAuthorize("hasRole('ADMIN')")
+
     @PostMapping("/estudio")
     public void guardarEstudio(@RequestBody Estudios est){
         estI.crearEstudio(est);
     }
-    @PreAuthorize("hasRole('ADMIN')")
+
     @DeleteMapping("/estudio/{id}")
     public void eliminarEstudio(@PathVariable Long id){
         estI.eliminarEstudios(id);
     }
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/estudio")
     public void editEstudio(@RequestBody Estudios est){
         estI.editEstudio(est);
     }
     
     //Rutas para la clase Institucion
-    @GetMapping("/instituciones")
+    @GetMapping("/auth/instituciones")
     public List<Institucion> verInstituciones(){
         return instI.verInstituciones();
     }
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/institucion")
     public Institucion agregarInstitucion(@RequestBody Institucion insti){
         instI.crearInstitucion(insti);
         return insti;
     }
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/institucion/{id}")
     public void eliminarInstitucion(@PathVariable Long id){
         instI.eliminarInstitucion(id);
     }
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/institucion")
     public void editEstudio(@RequestBody Institucion inst){
         instI.editInstitucion(inst);
     }
     
     //Rutas para la clase Proyecto
-    @GetMapping("/proyectos")
+    @GetMapping("/auth/proyectos")
     public List<Proyecto> verproyectos(){
         return proyI.obtenerProyectos();
     }
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/proyecto")
     public void agregarproyectos(@RequestBody Proyecto proy){
         proyI.crearProyecto(proy);
     }
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/proyecto/{id}")
     public void eliminarProyecto(@PathVariable Long id){
         proyI.deleteProy(id);
     }
     
     //Rutas para la clase Trabajos
-    @GetMapping("/trabajos")
+    @GetMapping("/auth/trabajos")
     public List<Trabajos> verTrabajos(){
         return trab.verTrabajos();
     }
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/trabajo")
     public void crearTrabajo(@RequestBody Trabajos job){
         trab.agregarTrabajo(job);
     }
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("trabajo/{id}")
     public void eliminarTrabajo(@PathVariable Long id){
         trab.eliminarTrabajo(id);
     }
-    @GetMapping("/trabajo/{id}")
+    @GetMapping("/auth/trabajo/{id}")
     public Trabajos verTrabajo(@PathVariable Long id){
         return trab.verTrabajo(id);
     }
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/trabajo")
     public void editEstudio(@RequestBody Trabajos tr){
         trab.editTrabajo(tr);
     }
     
     //Rutas para la clase Usuario
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/usuario")
     public void crearUsuario(@RequestBody Usuario user){
         userI.crearUsuario(user);
     }
-    @GetMapping("/usuario/{id}")
+    @GetMapping("/auth/usuario/{id}")
     public Usuario verUsuario(@PathVariable Long id){
         return userI.verUsuario(id);
     }
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/usuario")
     public void editEstudio(@RequestBody Usuario user){
         userI.editUsuario(user);

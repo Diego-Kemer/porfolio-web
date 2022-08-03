@@ -13,23 +13,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class ManiUser  implements UserDetails{
     private String userName;
     private String password;
-    private Collection<? extends GrantedAuthority> authorities;
+   
 
-    public ManiUser(String userName, String password, Collection<? extends GrantedAuthority> authorities) {
+    public ManiUser(String userName, String password) {
         this.userName = userName;
         this.password = password;
-        this.authorities = authorities;
+       
     }
     
     public static  ManiUser build(User user){
-        List<GrantedAuthority> authoritys = user.getRoles().stream().map(role -> new  SimpleGrantedAuthority(role.getRolName().name())).collect(Collectors.toList());
-        return new ManiUser(user.getUserName(), user.getPassword(), authoritys);
+        return new ManiUser(user.getUserName(), user.getPassword());
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-       return authorities;
-    }
+    
 
     @Override
     public String getPassword() {
@@ -59,6 +55,11 @@ public class ManiUser  implements UserDetails{
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
     
     

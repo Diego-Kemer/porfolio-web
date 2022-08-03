@@ -5,12 +5,12 @@ import com.diego_kemer.porfolio.security.Message;
 import com.diego_kemer.porfolio.security.dto.JwtDto;
 import com.diego_kemer.porfolio.security.dto.LogiUser;
 import com.diego_kemer.porfolio.security.dto.NewUser;
-import com.diego_kemer.porfolio.security.entities.Role;
+
 import com.diego_kemer.porfolio.security.entities.User;
 import com.diego_kemer.porfolio.security.enums.RoleList;
 import com.diego_kemer.porfolio.security.jwt.JwtProvides;
 import com.diego_kemer.porfolio.security.repositories.UserRepository;
-import com.diego_kemer.porfolio.security.services.RoleService;
+
 import com.diego_kemer.porfolio.security.services.UserService;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,24 +35,23 @@ public class AuthController {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final PasswordEncoder passwordEncode;
     private final UserService userService;
-    private final RoleService roleService;
     private final JwtProvides jwtProvides;
     private UserRepository userRepository;
     
     @Autowired
-    public AuthController(AuthenticationManagerBuilder authenticationManagerBuilder, PasswordEncoder passwordEncode, UserService userService, RoleService roleService, JwtProvides jwtProvides, UserRepository userRepository) {
+    public AuthController(AuthenticationManagerBuilder authenticationManagerBuilder, PasswordEncoder passwordEncode, UserService userService, JwtProvides jwtProvides, UserRepository userRepository) {
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.passwordEncode = passwordEncode;
         this.userService = userService;
-        this.roleService = roleService;
         this.jwtProvides = jwtProvides;
         this.userRepository = userRepository;
     }
     
     @PostMapping("/login")
     public ResponseEntity<Object> login(@Valid @RequestBody LogiUser loginUser, BindingResult bindignResult){
-        if (bindignResult.hasErrors())
+        if (bindignResult.hasErrors()){
             return new ResponseEntity<>(new Message("Revise sus credenciales"), HttpStatus.BAD_REQUEST);
+        }
             try {
                 UsernamePasswordAuthenticationToken authentToken = new UsernamePasswordAuthenticationToken(loginUser.getUserName(), loginUser.getPassword());
                 Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authentToken);
@@ -61,6 +60,7 @@ public class AuthController {
                 JwtDto jwtDto = new JwtDto(jwt);
                 return new ResponseEntity<>(jwtDto, HttpStatus.OK);
             } catch (Exception e) {
+                System.out.println(e);
                 return new ResponseEntity<>(new Message("Revise sus credenciales") , HttpStatus.BAD_REQUEST);
             }
     }
@@ -74,11 +74,6 @@ public class AuthController {
             return new ResponseEntity<>(new Message("Revise los campos e intente nuevamente"), HttpStatus.BAD_REQUEST);
         User user = new User(newUser.getUserName(),
                 passwordEncode.encode(newUser.getPassword()));
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleService.getByRoleName(RoleList.ROLE_USER).get());
-        if (newUser.getRoles().contains("admin"))
-            roles.add(roleService.getByRoleName(RoleList.ROLE_ADMIN).get());
-        user.setRoles(roles);
         userService.save(user);
         return new ResponseEntity<>(new Message("Registro exitoso! Inicie sesión"), HttpStatus.CREATED);
     }

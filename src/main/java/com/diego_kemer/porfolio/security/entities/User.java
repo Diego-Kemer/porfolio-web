@@ -34,11 +34,7 @@ public class User {
     private String userName;
     @NotNull
     private String password;
-    @NotNull
-    @ManyToMany(fetch = FetchType.EAGER)
-    //Esta tabla simplemente la usamos para identificar que role tiene cada usuari y que cada usuario pueda tener más de un role
-    @JoinTable(name="user_role_relate", joinColumns = @JoinColumn(name="user_id"), inverseJoinColumns=@JoinColumn(name="role_id"))
-    private transient Set<Role> roles = new HashSet<>();
+    
 
     public User() {
     }

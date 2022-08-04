@@ -95,6 +95,10 @@ public class Controller {
     public void eliminarProyecto(@PathVariable Long id){
         proyI.deleteProy(id);
     }
+    @PutMapping("/proyecto")
+    public void editProyecto(@RequestBody Proyecto proy){
+        proyI.editProyect(proy);
+    }
     
     //Rutas para la clase Trabajos
     @GetMapping("/auth/trabajos")
@@ -128,7 +132,7 @@ public class Controller {
         return userI.verUsuario(id);
     }
     @PutMapping("/usuario")
-    public void editEstudio(@RequestBody Usuario user){
+    public void editUsuario(@RequestBody Usuario user){
         userI.editUsuario(user);
     }
 }

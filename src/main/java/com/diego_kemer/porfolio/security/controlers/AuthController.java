@@ -7,13 +7,10 @@ import com.diego_kemer.porfolio.security.dto.LogiUser;
 import com.diego_kemer.porfolio.security.dto.NewUser;
 
 import com.diego_kemer.porfolio.security.entities.User;
-import com.diego_kemer.porfolio.security.enums.RoleList;
 import com.diego_kemer.porfolio.security.jwt.JwtProvides;
 import com.diego_kemer.porfolio.security.repositories.UserRepository;
 
 import com.diego_kemer.porfolio.security.services.UserService;
-import java.util.HashSet;
-import java.util.Set;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

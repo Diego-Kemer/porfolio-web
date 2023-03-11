@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.diego_kemer.porfolio.PorfolioApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 34.324 s - in com.diego_kemer.porfolio.PorfolioApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 24.837 s - in com.diego_kemer.porfolio.PorfolioApplicationTests
